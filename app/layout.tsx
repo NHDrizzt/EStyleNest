@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Sans } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSans = Noto_Sans({
+  variable: "--font-noto-sans",
   subsets: ["latin"],
 });
 
@@ -24,9 +21,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${notoSans.variable} font-sans antialiased`}>
+        <div className={`relative`}>
+          <div
+            className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] mt-4 px-4 md:px-8`}
+          >
+            <Header />
+            <div className={``}>
+              <HeroSection />
+            </div>
+          </div>
+          <div
+            className={`absolute top-0 bg-white w-full mt-[70px] mx-4 left-1/2 -translate-x-1/2 h-full z-[-1]`}
+          ></div>
+        </div>
+
         {children}
       </body>
     </html>
