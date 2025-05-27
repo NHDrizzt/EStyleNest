@@ -3,6 +3,7 @@ import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
+import ProductsSection from "@/components/ProductsSection";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -27,16 +28,12 @@ export default function RootLayout({
             className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] mt-4 px-4 md:px-8`}
           >
             <Header />
-            <div className={``}>
-              <HeroSection />
-            </div>
+            {children}
           </div>
           <div
             className={`absolute top-0 bg-white w-full mt-[70px] mx-4 left-1/2 -translate-x-1/2 h-full z-[-1]`}
           ></div>
         </div>
-
-        {children}
       </body>
     </html>
   );

@@ -1,9 +1,11 @@
-import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import { ProductsSectionWrapper } from "@/components/ProductSectionWrapper";
 
-export default function Home() {
+export default async function HomePage() {
   return (
-    <div>
-
-    </div>
+    <>
+      <HeroSection />
+      <ProductsSectionWrapper />
+    </>
   );
 }
