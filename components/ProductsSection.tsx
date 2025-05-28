@@ -1,8 +1,19 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 
 interface Props {
   collections: ProductData;
+}
+
+interface Inventory {
+  sku: string;
+  color: string;
+  list_price: number;
+  sale_price: number;
+  sold: number;
+  stock: number;
+  discount_percentage: number;
 }
 
 interface ProductData {
@@ -13,10 +24,17 @@ interface ProductData {
       id: number;
       image_url: string;
     }[];
+    inventory: Inventory[];
   }[];
 }
 
-const ProductsSection = ({ collections }) => {
+const ProductsSection = ({ collections }: Props) => {
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+
+  const handleColorSelect = (color: string) => {
+    setSelectedColor((prev) => (prev === color ? null : color));
+  };
+
   console.log(collections);
   return (
     <div className={`mt-[96px]`}>
@@ -33,7 +51,7 @@ const ProductsSection = ({ collections }) => {
       <div className={`mt-8`}>
         <div className={`grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4`}>
           {collections.data.map((collection: any, index) => (
-            <div key={collection.product_id} className={``}>
+            <div key={collection.product_id} className={`cursor-pointer`}>
               {
                 <div className="h-[280px] w-[280px]">
                   <Image
@@ -41,7 +59,7 @@ const ProductsSection = ({ collections }) => {
                     alt={`image`}
                     width={280}
                     height={280}
-                    className="h-full w-full object-cover rounded-lg"
+                    className="h-full w-full object-cover rounded-lg hover:scale-105 transition duration-300 ease-in-out"
                   />
                 </div>
               }
@@ -50,18 +68,49 @@ const ProductsSection = ({ collections }) => {
                 <p className={`text-xs text-neutral-600 capitalize pb-[2px]`}>
                   {collection.images[0].color}
                 </p>
-                <p className={`font-medium text-lg pb-3`}>{collection.name}</p>
-                <p className={`text-lg font-base text-neutral-600 pb-3`}>
-                  ${collection.priceRange.highest}
+                <p className={`font-medium text-lg pb-3 hover:text-indigo-600`}>
+                  {collection.name}
                 </p>
-                <div className={`flex gap-x-3 mb-[30px]`}>
+                <div className={`flex gap-x-2 items-center`}>
+                  <p className={`text-lg font-base text-neutral-600 pb-3`}>
+                    ${collection.inventory[0].sale_price}
+                  </p>
+                  {collection.inventory[0].discount_percentage && (
+                    <p
+                      className={`text-xs font-base line-through text-neutral-600 pb-3`}
+                    >
+                      ${collection.inventory[0].list_price}
+                    </p>
+                  )}
+                </div>
+
+                <div className="flex gap-x-1 mb-[30px]">
                   {collection.colors.map((color: any, index) => (
-                    <div key={index} className={`p-1`}>
+                    <div key={index} className="p-1">
                       <button
-                        className={`w-4 h-4 rounded-full focus:outline focus:outline-offset-2 focus:outline-indigo-600`}
+                        className={`relative w-4 h-4 rounded-full cursor-pointer  ${
+                          selectedColor === color
+                            ? "ring-offset-1 ring-2 ring-indigo-600"
+                            : ""
+                        } ${color === `white` ? "border-neutral-400 border" : ""}`}
                         style={{ backgroundColor: color }}
-                        key={`${color}`}
-                      />
+                        onClick={() => handleColorSelect(color)}
+                        aria-label={`Select color ${color}`}
+                      >
+                        {selectedColor === color && (
+                          <svg
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 stroke-white"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            aria-hidden="true"
+                          >
+                            <path d="M5 13l4 4L19 7" />
+                          </svg>
+                        )}
+                      </button>
                     </div>
                   ))}
                 </div>

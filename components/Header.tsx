@@ -25,11 +25,21 @@ const Header = () => {
           <div
             className={`py-1 pl-[103px] flex  items-center gap-x-8 text-neutral-600 w-full`}
           >
-            <li className={`hidden xl:block text-base`}>
-              <Link href="#">Shop all</Link>
+            <li className={`hidden xl:block text-base group`}>
+              <Link href="#" className={`relative group-hover:text-indigo-600`}>
+                Shop all
+                <span
+                  className={`absolute -bottom-0.5 left-0 w-0 h-[1px]  bg-indigo-600 transition-all duration-300 ease-in-out group-hover:w-full`}
+                ></span>
+              </Link>
             </li>
-            <li className={`hidden xl:block text-base`}>
-              <Link href="#">Latest arrivals</Link>
+            <li className={`hidden xl:block text-base group`}>
+              <Link href="#" className={`relative group-hover:text-indigo-600`}>
+                Latest arrivals
+                <span
+                  className={`absolute -bottom-0.5 left-0 w-0 h-[1px]  bg-indigo-600 transition-all duration-300 ease-in-out group-hover:w-full`}
+                ></span>
+              </Link>
             </li>
             <div className={`ml-auto flex gap-x-4`}>
               {!isSidebarOpen && (
@@ -74,14 +84,22 @@ const Header = () => {
         <div className={`absolute right-0 w-full  pt-1 px-4 h-screen z-50`}>
           <div>
             <ul>
-              <li className={`px-3 py-2`}>
-                <Link href="#" className={`text-sm`}>
+              <li className="px-3 py-2 group">
+                <Link
+                  href="#"
+                  className="relative text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+                >
                   Shop all
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </li>
-              <li className={`px-3 py-2`}>
-                <Link href="#" className={`text-sm`}>
+              <li className="px-3 py-2 group">
+                <Link
+                  href="#"
+                  className="relative text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+                >
                   Latest arrivals
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               </li>
             </ul>
