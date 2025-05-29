@@ -2,6 +2,10 @@
 
 :root {
   --background: linear-gradient(to bottom, #F9FAFB, #D2D6DB);
+  --filter-collection: linear-gradient(to top,
+  rgba(0, 0, 0, 1) 0%,
+  rgba(0, 0, 0, 0.33) 100%
+  );
   --foreground: #171717;
 }
 
@@ -9,9 +13,15 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-noto-sans);
+  --drop-shadow-bg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --color-background-filter-collection: var(--filter-collection);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.filter-collection {
+  background: var(--filter-collection);
 }

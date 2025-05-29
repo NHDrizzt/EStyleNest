@@ -31,7 +31,7 @@ export default function RootLayout({
             {children}
           </div>
           <div
-            className={`absolute top-0 bg-white w-full mt-[70px] mx-4 left-1/2 -translate-x-1/2 h-full z-[-1]`}
+            className={`absolute top-0 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 h-full z-[-1] drop-shadow-bg`}
           ></div>
         </div>
       </body>

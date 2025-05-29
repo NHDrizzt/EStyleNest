@@ -17,15 +17,18 @@ interface Inventory {
 }
 
 interface ProductData {
-  data: {
-    id: number;
-    name: string;
-    images: {
-      id: number;
-      image_url: string;
-    }[];
-    inventory: Inventory[];
+  data: Product[];
+}
+
+interface Product {
+  product_id: number;
+  name: string;
+  images: {
+    color: string;
+    image_url: string;
   }[];
+  inventory: Inventory[];
+  colors: string[];
 }
 
 const ProductsSection = ({ collections }: Props) => {
@@ -34,11 +37,9 @@ const ProductsSection = ({ collections }: Props) => {
   const handleColorSelect = (color: string) => {
     setSelectedColor((prev) => (prev === color ? null : color));
   };
-
-  console.log(collections);
   return (
-    <div className={`mt-[96px]`}>
-      <div className={`flex justify-between w-full`}>
+    <div className={`px-3 md:px-0 mt-[96px]`}>
+      <div className={`flex justify-between items-center w-full`}>
         <h1 className={`font-semibold text-2xl md:text-3xl`}>
           Latests Arrivals
         </h1>
@@ -50,16 +51,16 @@ const ProductsSection = ({ collections }: Props) => {
       </div>
       <div className={`mt-8`}>
         <div className={`grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4`}>
-          {collections.data.map((collection: any, index) => (
+          {collections.data.map((collection: Product) => (
             <div key={collection.product_id} className={`cursor-pointer`}>
               {
-                <div className="h-[280px] w-[280px]">
+                <div className="h-[225px] xl:h-[300px] w-full xl:w-[280px] overflow-hidden rounded-lg aspect-[14/15]">
                   <Image
                     src={`${collection.images[0].image_url}`}
                     alt={`image`}
                     width={280}
-                    height={280}
-                    className="h-full w-full object-cover rounded-lg hover:scale-105 transition duration-300 ease-in-out"
+                    height={300}
+                    className="h-full md:h-full w-full object-cover rounded-lg hover:scale-105 transition duration-300 ease-in-out"
                   />
                 </div>
               }
@@ -72,12 +73,12 @@ const ProductsSection = ({ collections }: Props) => {
                   {collection.name}
                 </p>
                 <div className={`flex gap-x-2 items-center`}>
-                  <p className={`text-lg font-base text-neutral-600 pb-3`}>
+                  <p className={`text-lg font-base text-neutral-600 `}>
                     ${collection.inventory[0].sale_price}
                   </p>
                   {collection.inventory[0].discount_percentage && (
                     <p
-                      className={`text-xs font-base line-through text-neutral-600 pb-3`}
+                      className={`text-xs font-base line-through text-neutral-600`}
                     >
                       ${collection.inventory[0].list_price}
                     </p>
@@ -85,7 +86,7 @@ const ProductsSection = ({ collections }: Props) => {
                 </div>
 
                 <div className="flex gap-x-1 mb-[30px]">
-                  {collection.colors.map((color: any, index) => (
+                  {collection.colors.map((color: string, index) => (
                     <div key={index} className="p-1">
                       <button
                         className={`relative w-4 h-4 rounded-full cursor-pointer  ${
