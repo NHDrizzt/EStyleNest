@@ -1,5 +1,11 @@
 "use client";
-export const ProductErrorComponent = ({ message }) => (
+
+interface ProductErrorComponentProps {
+  message: string;
+}
+export const ProductErrorComponent = ({
+  message,
+}: ProductErrorComponentProps) => (
   <div className="mt-8 p-4 bg-red-50 border border-red-200 rounded-lg">
     <p className="text-red-600">{message}</p>
     <button
