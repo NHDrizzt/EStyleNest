@@ -2,7 +2,7 @@ import React from "react";
 
 const Newsletter = () => {
   return (
-    <div className={`px-3`}>
+    <div className={`px-3 md:px-0`}>
       <div className={`flex flex-col gap-y-5 xl:flex-row justify-between`}>
         <div className={`flex flex-col gap-y-2.5`}>
           <p className={`text-neutral-900 text-xl font-semibold`}>
