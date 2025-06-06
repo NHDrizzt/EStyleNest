@@ -11,7 +11,7 @@ const Header = () => {
       <nav className={``}>
         <ul className="flex items-center">
           <li className={`py-3`}>
-            <div className={`w-[105px] max-h-8`}>
+            <Link href="/" className={`w-[105px] max-h-8`}>
               <Image
                 className={`cursor-pointer`}
                 src="/logo.svg"
@@ -20,7 +20,7 @@ const Header = () => {
                 width={105}
                 height={32}
               />
-            </div>
+            </Link>
           </li>
           <div
             className={`py-1 pl-[103px] flex  items-center gap-x-8 text-neutral-600 w-full`}

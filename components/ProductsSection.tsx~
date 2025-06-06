@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Product, ProductData } from "@/types/product";
+import {Product, ProductData} from "@/types/product";
 
 interface Props {
   collections: ProductData;
 }
+
+
 
 const ProductsSection = ({ collections }: Props) => {
   const [selectedColor, setSelectedColor] = useState<string | null>(null);

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import ProductsSection from "@/components/ProductsSection";
+import StoreProvider from "@/providers/storeProvider";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -22,17 +21,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${notoSans.variable} font-sans antialiased`}>
-        <div className={`relative`}>
-          <div
-            className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] mt-4 px-4 md:px-8`}
-          >
-            <Header />
-            {children}
+      <StoreProvider>
+        <body className={`${notoSans.variable} font-sans antialiased`}>
+          <div className={`relative min-h-screen`}>
+            <div
+              className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] pt-4 px-4 md:px-8`}
+            >
+              <Header />
+              {children}
+            </div>
+            <div className="absolute top-4 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 bottom-4 z-[-1] drop-shadow-bg rounded-md"></div>
           </div>
-          <div className="absolute top-0 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 bottom-4 z-[-1] drop-shadow-bg rounded-md"></div>
-        </div>
-      </body>
+        </body>
+      </StoreProvider>
     </html>
   );
 }
