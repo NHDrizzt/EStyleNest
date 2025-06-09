@@ -23,7 +23,6 @@ export default function ProductPage() {
 
     fetchData();
   }, [productId]);
-  console.log(product);
   if (!product) return <div>Loading...</div>;
 
   return (

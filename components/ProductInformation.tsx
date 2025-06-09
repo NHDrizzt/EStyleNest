@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Info, Inventory, Product } from "@/types/product";
 import RatingStars from "@/components/RatingStar";
 import { ToggleOpenIcon, ToggleCloseIcon } from "@/components/ComponentsSVG";
+import { useColorSelection } from "@/hooks/useColorSelection";
 
 interface Props {
   productList: Product;
@@ -9,14 +10,12 @@ interface Props {
 
 const ProductInformation = ({ productList }: Props) => {
   console.log(productList);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [currentSelectedInventory, setCurrentSelectedInventory] =
     useState<Inventory | null>(productList.inventory[0]);
-
-  const handleColorSelect = (color: string) => {
-    setSelectedColor((prev) => (prev === color ? null : color));
-  };
+  const { toggleColor, isSelected, currentColor } = useColorSelection(
+    productList.product_id,
+  );
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize((prev) => (prev === size ? null : size));
@@ -43,15 +42,15 @@ const ProductInformation = ({ productList }: Props) => {
   );
 
   useEffect(() => {
-    if (selectedColor && selectedSize) {
+    if (currentColor && selectedSize) {
       const matchingInventoryItem = productList.inventory.find(
-        (item) => item.color === selectedColor && item.size === selectedSize,
+        (item) => item.color === currentColor && item.size === selectedSize,
       );
       if (matchingInventoryItem) {
         setCurrentSelectedInventory(matchingInventoryItem);
       }
     }
-  }, [productList.inventory, selectedColor, selectedSize]);
+  }, [productList.inventory, currentColor, selectedSize]);
 
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
@@ -105,7 +104,7 @@ const ProductInformation = ({ productList }: Props) => {
             activeColor={"#FACC15"}
           />
           <p
-            className={`text-sm font-medium text-indigo-600 hover:underline cursor-pointer`}
+            className={`text-sm font-medium text-indigo-600 hover:underline cursor-pointer hover:text-indigo-700`}
           >
             See all {productList.reviews} reviews
           </p>
@@ -124,15 +123,13 @@ const ProductInformation = ({ productList }: Props) => {
           <div key={color} className="p-2.5">
             <button
               className={`relative w-9.5 h-9.5 rounded-full cursor-pointer  ${
-                selectedColor === color
-                  ? "ring-offset-1 ring-2 ring-indigo-600"
-                  : ""
+                isSelected(color) ? "ring-offset-1 ring-2 ring-indigo-600" : ""
               } ${color === `white` ? "border-neutral-400 border" : ""}`}
               style={{ backgroundColor: color }}
-              onClick={() => handleColorSelect(color)}
+              onClick={() => toggleColor(color)}
               aria-label={`Select color ${color}`}
             >
-              {selectedColor === color && (
+              {isSelected(color) && (
                 <svg
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 stroke-white"
                   viewBox="0 0 24 24"
@@ -141,6 +138,9 @@ const ProductInformation = ({ productList }: Props) => {
                   strokeLinejoin="round"
                   strokeWidth="2"
                   aria-hidden="true"
+                  style={{
+                    stroke: color === "white" ? "black" : "white",
+                  }}
                 >
                   <path d="M5 13l4 4L19 7" />
                 </svg>
@@ -226,17 +226,20 @@ const ProductInformation = ({ productList }: Props) => {
 
       <div className={`w-full mt-8`}>
         <button
-          className={`w-full bg-indigo-600 text-white text-lg font-medium px-3 py-4 rounded-lg cursor-pointer`}
+          className={`w-full bg-indigo-600 text-white text-lg font-medium px-3 py-4 rounded-lg cursor-pointer hover:bg-indigo-700`}
         >
           Add to Cart
         </button>
       </div>
 
-      <div className={`mt-10`}>
+      <div className={`mt-10 flex flex-col gap-y-6`}>
         {productList.info.map(({ title, description }, index) => (
-          <div key={index} className="mb-4">
+          <div
+            key={index}
+            className={` ${productList.info.length - 1 === index ? "" : "border-b pb-8 border-neutral-200 "}`}
+          >
             <div
-              className="flex items-center justify-between cursor-pointer"
+              className={`flex items-center justify-between cursor-pointer   `}
               onClick={() => toggleDescription(index)}
             >
               <p className="text-lg font-medium text-neutral-900">{title}</p>

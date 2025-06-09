@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "@/store/cartSlicer";
+import selectedColorReducer from "@/store/colorSlicer";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       cart: cartReducer,
+      selectedColor: selectedColorReducer,
     },
   });
 };
