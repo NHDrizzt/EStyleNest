@@ -1,10 +1,11 @@
 // components/ProductCard.tsx
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Product } from "@/types/product";
 import { useColorSelection } from "@/hooks/useColorSelection";
+import { useAppDispatch } from "@/hooks/storeHooks";
 
 interface ProductCardProps {
   collection: Product;
@@ -12,23 +13,59 @@ interface ProductCardProps {
 
 const ProductCard = ({ collection }: ProductCardProps) => {
   const router = useRouter();
-  const { toggleColor, isSelected } = useColorSelection(collection.product_id);
+  const { toggleColor, isSelected, currentColor } = useColorSelection(
+    collection.product_id,
+  );
+
+  const [transitionDirection, setTransitionDirection] = useState<
+    "left" | "right"
+  >("right");
+  const prevColorRef = useRef(currentColor);
 
   const handleProductDetail = () => {
     router.push(`/product/${collection.product_id}`);
   };
 
+  const matchedImage = collection.images.find(
+    (img) => img.color === currentColor,
+  );
+
+  const displayImage = matchedImage || collection.images[0];
+
+  useEffect(() => {
+    if (prevColorRef.current !== currentColor) {
+      const prevIndex = collection.images.findIndex(
+        (img) => img.color === prevColorRef.current,
+      );
+      const currentIndex = collection.images.findIndex(
+        (img) => img.color === currentColor,
+      );
+
+      setTransitionDirection(prevIndex < currentIndex ? "right" : "left");
+      prevColorRef.current = currentColor;
+    }
+  }, [currentColor, collection.images]);
+
   return (
     <div className={`flex flex-col`}>
       <div className={`cursor-pointer`} onClick={handleProductDetail}>
         <div className="h-[225px] xl:h-[300px] w-full xl:w-[280px] overflow-hidden rounded-lg aspect-[14/15]">
-          <Image
-            src={`${collection.images[0].image_url}`}
-            alt={`image`}
-            width={280}
-            height={300}
-            className="h-full md:h-full w-full object-cover rounded-lg hover:scale-105 transition duration-300 ease-in-out"
-          />
+          <div
+            key={displayImage.image_url}
+            className={`w-full h-full ${
+              transitionDirection === "right"
+                ? "animate-slide-in-right"
+                : "animate-slide-in-left"
+            }`}
+          >
+            <Image
+              src={displayImage.image_url}
+              alt={`image`}
+              width={280}
+              height={300}
+              className="h-full md:h-full w-full object-cover rounded-lg hover:scale-105 transition duration-300 ease-in-out"
+            />
+          </div>
         </div>
 
         <div className={`flex flex-col mt-4`}>

@@ -2,9 +2,11 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const router = useRouter();
 
   return (
     <header>
@@ -43,7 +45,10 @@ const Header = () => {
             </li>
             <div className={`ml-auto flex gap-x-4`}>
               {!isSidebarOpen && (
-                <li className={`cursor-pointer`}>
+                <li
+                  className={`cursor-pointer`}
+                  onClick={() => router.push("/cart")}
+                >
                   <Image
                     src={`/cta-buttons.svg`}
                     alt={`Shopping cart`}

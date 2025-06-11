@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Info, Inventory, Product } from "@/types/product";
+import { Inventory, Product } from "@/types/product";
 import RatingStars from "@/components/RatingStar";
 import { ToggleOpenIcon, ToggleCloseIcon } from "@/components/ComponentsSVG";
 import { useColorSelection } from "@/hooks/useColorSelection";
+import { useAppDispatch } from "@/hooks/storeHooks";
+import { addItem } from "@/store/cartSlicer";
 
 interface Props {
   productList: Product;
 }
 
 const ProductInformation = ({ productList }: Props) => {
-  console.log(productList);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [currentSelectedInventory, setCurrentSelectedInventory] =
     useState<Inventory | null>(productList.inventory[0]);
   const { toggleColor, isSelected, currentColor } = useColorSelection(
     productList.product_id,
   );
+  const [counter, setCounter] = useState(1);
+  const dispatch = useAppDispatch();
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize((prev) => (prev === size ? null : size));
@@ -176,9 +179,9 @@ const ProductInformation = ({ productList }: Props) => {
       )}
 
       <div>
-        <p className={`text-sm text-neutral-500`}>Quantity</p>
+        {/*<p className={`text-sm text-neutral-500`}>Quantity</p>*/}
         <div
-          className={`border-1 border-neutral-200 bg-neutral-50 py-1.5 mt-4 rounded-lg max-w-[125px]`}
+          className={`border-1 border-neutral-200 bg-neutral-50 flex flex-col justify-center   h-9 rounded-lg max-w-[125px]`}
         >
           <div className={`flex items-center justify-between`}>
             <div
@@ -186,6 +189,9 @@ const ProductInformation = ({ productList }: Props) => {
             >
               <button
                 className={`w-4 h-4 flex items-center justify-center cursor-pointer`}
+                onClick={() => {
+                  setCounter(Math.max(counter - 1, 1));
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -201,9 +207,12 @@ const ProductInformation = ({ productList }: Props) => {
                 </svg>
               </button>
 
-              <p className={`text-base text-neutral-600`}>1</p>
+              <p className={`text-base text-neutral-600`}>{counter}</p>
               <button
                 className={`w-4 h-4 flex items-center justify-center cursor-pointer`}
+                onClick={() => {
+                  setCounter(counter + 1);
+                }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -227,6 +236,18 @@ const ProductInformation = ({ productList }: Props) => {
       <div className={`w-full mt-8`}>
         <button
           className={`w-full bg-indigo-600 text-white text-lg font-medium px-3 py-4 rounded-lg cursor-pointer hover:bg-indigo-700`}
+          onClick={() => {
+            dispatch(
+              addItem({
+                product: productList,
+                variant: currentColor,
+                size: selectedSize,
+                price: currentSelectedInventory.list_price,
+                quantity: counter,
+                discount: currentSelectedInventory.discount_percentage || 0,
+              }),
+            );
+          }}
         >
           Add to Cart
         </button>

@@ -3,6 +3,8 @@ import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import StoreProvider from "@/providers/storeProvider";
+import PersistProvider from "@/providers/PersistanceProvider";
+import Footer from "@/components/Footer";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
@@ -21,19 +23,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <StoreProvider>
-        <body className={`${notoSans.variable} font-sans antialiased`}>
-          <div className={`relative min-h-screen`}>
-            <div
-              className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] pt-4 px-4 md:px-8`}
-            >
-              <Header />
-              {children}
+      <body className={`${notoSans.variable} font-sans antialiased`}>
+        <StoreProvider>
+          <PersistProvider>
+            <div className={`relative min-h-screen`}>
+              <div
+                className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] pt-4 px-4 md:px-8`}
+              >
+                <Header />
+                {children}
+                <div className={`mt-16 md:pb-[96px] pb-12`}>
+                  <Footer />
+                </div>
+              </div>
+              <div className="absolute top-4 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 bottom-4 z-[-1] drop-shadow-bg rounded-md"></div>
             </div>
-            <div className="absolute top-4 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 bottom-4 z-[-1] drop-shadow-bg rounded-md"></div>
-          </div>
-        </body>
-      </StoreProvider>
+          </PersistProvider>
+        </StoreProvider>
+      </body>
     </html>
   );
 }

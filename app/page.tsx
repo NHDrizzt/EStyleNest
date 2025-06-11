@@ -17,11 +17,8 @@ export default async function HomePage() {
       <div className={`mt-[192px]`}>
         <Advantages />
       </div>
-      <div className={`mt-[192px]`}>
+      <div className={`mt-[192px] `}>
         <Newsletter />
-      </div>
-      <div className={`mt-16 md:pb-[96px] pb-12`}>
-        <Footer />
       </div>
     </>
   );

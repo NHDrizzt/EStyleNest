@@ -69,6 +69,7 @@ const cartSlice = createSlice({
       state.items = [];
     },
   },
+
 });
 
 export const { addItem, removeItem, updateQuantity, clearCart, updatePrice } =

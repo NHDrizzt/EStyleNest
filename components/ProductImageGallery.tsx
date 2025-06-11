@@ -1,13 +1,39 @@
 "use client";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import { useColorSelection } from "@/hooks/useColorSelection";
+
+type ImageType = {
+  image_url: string;
+  color?: string; // assuming `color` is a string like "red", "blue", etc.
+};
 
 export default function ProductImageGallery({
+  productId,
   images,
 }: {
-  images: { image_url: string }[];
+  productId: number;
+  images: ImageType[];
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { currentColor } = useColorSelection(productId);
+
+  const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (!currentColor || images.length === 0) return;
+
+    const index = images.findIndex((img) => img.color === currentColor);
+
+    if (index !== -1) {
+      setCurrentImageIndex(index);
+      thumbnailRefs.current[index]?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [currentColor, images]);
 
   if (!images || images.length === 0) return <div>No images available</div>;
 
@@ -28,9 +54,12 @@ export default function ProductImageGallery({
           {images.map((image, index) => (
             <div
               key={index}
+              ref={(el) => {
+                thumbnailRefs.current[index] = el;
+              }}
               className={`relative flex-shrink-0 cursor-pointer transition-all duration-200 ${
                 currentImageIndex === index
-                  ? "border-3 border-indigo-600 rounded-lg"
+                  ? "border-[3px] border-indigo-600 rounded-lg"
                   : "opacity-80 hover:opacity-100"
               }`}
               style={{
