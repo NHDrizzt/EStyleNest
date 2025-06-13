@@ -1,6 +1,13 @@
 import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { CheckoutFormData } from "@/schema/CheckoutSchema";
 
-const CardNumberInput = ({ register, errors }) => {
+type CardNumberInputProps = {
+  register: UseFormRegister<CheckoutFormData>;
+  errors: FieldErrors<CheckoutFormData>;
+};
+
+const CardNumberInput = ({ register, errors }: CardNumberInputProps) => {
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
     value = value.substring(0, 16);

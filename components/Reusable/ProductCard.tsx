@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Product } from "@/types/product";
 import { useColorSelection } from "@/hooks/useColorSelection";
-import { useAppDispatch } from "@/hooks/storeHooks";
 
 interface ProductCardProps {
   collection: Product;

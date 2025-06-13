@@ -15,6 +15,7 @@ export async function ProductsSectionWrapper() {
 
     return <ProductsSection collections={collections} id={"latest-arrivals"} />;
   } catch (error) {
+    console.log(error);
     return (
       <ProductErrorComponent message="Failed to load products. Please try again later." />
     );

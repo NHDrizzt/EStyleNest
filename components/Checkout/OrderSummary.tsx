@@ -1,8 +1,10 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppSelector } from "@/hooks/storeHooks";
 import CartItem from "@/components/Checkout/CartItem";
 import Image from "next/image";
+import { UseFormWatch } from "react-hook-form";
+import { CheckoutFormData } from "@/schema/CheckoutSchema";
 
 const OrderSummary = ({
   isOrderSuccess,
@@ -10,7 +12,7 @@ const OrderSummary = ({
   isSubmitting,
 }: {
   isOrderSuccess: boolean;
-  watch: any;
+  watch: UseFormWatch<CheckoutFormData>;
   isSubmitting?: boolean;
 }) => {
   const shippingMethod = watch("shippingMethod");

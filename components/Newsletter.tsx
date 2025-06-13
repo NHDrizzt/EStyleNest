@@ -73,7 +73,7 @@ const Newsletter = () => {
             Join our newsletter
           </p>
           <p className={`text-neutral-600 text-base`}>
-            We'll send you a nice letter once per week. No spam.
+            We&apos;ll send you a nice letter once per week. No spam.
           </p>
         </div>
 

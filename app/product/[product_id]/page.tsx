@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Product } from "@/types/product";
-import Image from "next/image";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductInformation from "@/components/ProductInformation";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";

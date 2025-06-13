@@ -20,6 +20,7 @@ const localStorageSync: Middleware = (store) => (next) => (action) => {
     "cart/updateTotalPrice",
   ];
 
+  // @ts-expect-error brb
   if (cartActions.includes(action.type)) {
     saveState(store.getState());
   }

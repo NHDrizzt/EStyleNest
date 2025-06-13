@@ -106,7 +106,9 @@ export default function ProductImageGallery({
           {images.map((image, index) => (
             <div
               key={index}
-              ref={(el) => (thumbnailRefs.current[index] = el)}
+              ref={(el) => {
+                thumbnailRefs.current[index] = el;
+              }}
               className={`relative flex-shrink-0 cursor-pointer transition-all duration-200 ${
                 currentImageIndex === index
                   ? "border-[3px] border-indigo-600 rounded-lg"

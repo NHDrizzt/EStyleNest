@@ -27,7 +27,7 @@ const EmptyShoppingCart = () => {
             Your cart is empty
           </p>
           <p className={`text-base font-normal text-neutral-900`}>
-            Let's go explore some products
+            Let&apos;s go explore some products
           </p>
           <button
             className={`flex hover:bg-indigo-800 gap-x-1.5 cursor-pointer items-center justify-center text-white  py-2.5 w-full max-w-[192px] rounded-sm bg-indigo-700 shadow`}

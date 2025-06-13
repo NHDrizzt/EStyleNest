@@ -33,7 +33,7 @@ const HeroSection = () => {
           </h1>
           <h3 className={`font-normal text-lg md:text-xl`}>
             This year, our new summer collection will be your haven from the
-            world's harsh elements.
+            world&apos;s harsh elements.
           </h3>
           <Link
             href={`#latest-arrivals`}

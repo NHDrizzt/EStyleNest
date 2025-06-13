@@ -4,15 +4,15 @@ import Image from "next/image";
 import OrderSummary from "@/components/Checkout/OrderSummary";
 import { useRouter } from "next/navigation";
 import { CheckoutFormData } from "@/schema/CheckoutSchema";
+import { UseFormWatch } from "react-hook-form";
 
 const OrderSuccess = ({
   orderData,
   watch,
 }: {
   orderData: CheckoutFormData | undefined;
-  watch: any;
+  watch: UseFormWatch<CheckoutFormData>;
 }) => {
-  console.log();
   const router = useRouter();
   return (
     <div className={`flex gap-x-8 h-full`}>
@@ -34,8 +34,8 @@ const OrderSuccess = ({
           </div>
           <div>
             <p className={`text-base text-neutral-600`}>
-              Your order is now in the queue and being processed. We'll let you
-              know when we ship it out!
+              Your order is now in the queue and being processed. We&apos;ll let
+              you know when we ship it out!
             </p>
           </div>
         </div>
@@ -46,12 +46,6 @@ const OrderSuccess = ({
             <p className={`text-base font-medium text-neutral-900`}>
               1928371928
             </p>
-            {/*<Image*/}
-            {/*  src={`/order-code.svg`}*/}
-            {/*  alt={`order code icon`}*/}
-            {/*  width={20}*/}
-            {/*  height={20}*/}
-            {/*/>*/}
           </div>
         </div>
         <div>
