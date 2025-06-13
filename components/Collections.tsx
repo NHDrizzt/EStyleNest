@@ -84,7 +84,7 @@ const Collections = () => {
                 <p>{collections[0].description}</p>
               </div>
               <div
-                className={`absolute top-0 left-0 w-full cursor-pointer h-full filter-collection opacity-40 hover:opacity-60 transition-opacity duration-300 ease-in-out`}
+                className={`absolute top-0 left-0 w-full h-full filter-collection opacity-40 hover:opacity-60 transition-opacity duration-300 ease-in-out`}
               />
             </div>
           )}
@@ -106,7 +106,7 @@ const Collections = () => {
                   <p>{collection.description}</p>
                 </div>
                 <div
-                  className={`absolute top-0 left-0 w-full cursor-pointer h-full filter-collection opacity-40 hover:opacity-60 transition-opacity duration-300 ease-in-out`}
+                  className={`absolute top-0 left-0 w-full  h-full filter-collection opacity-40 hover:opacity-60 transition-opacity duration-300 ease-in-out`}
                 />
               </div>
             ))}

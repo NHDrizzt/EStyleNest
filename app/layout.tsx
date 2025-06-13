@@ -25,20 +25,22 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${notoSans.variable} font-sans antialiased`}>
         <StoreProvider>
-          <PersistProvider>
-            <div className={`relative min-h-screen`}>
+          {/*<PersistProvider>*/}
+          <div className={`relative min-h-screen`}>
+            <div
+              className={`relative mx-auto  w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] pt-4 px-4 md:px-8`}
+            >
+              <Header />
+              {children}
               <div
-                className={`relative mx-auto w-full xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] pt-4 px-4 md:px-8`}
+                className={`mt-16  xl:max-w-[1280px] md:max-w-[768px] max-w-[375px] w-full md:pb-[96px] pb-12`}
               >
-                <Header />
-                {children}
-                <div className={`mt-16 md:pb-[96px] pb-12`}>
-                  <Footer />
-                </div>
+                <Footer />
               </div>
-              <div className="absolute top-4 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 bottom-4 z-[-1] drop-shadow-bg rounded-md"></div>
             </div>
-          </PersistProvider>
+            <div className="absolute top-4 bg-white w-[calc(100%-2rem)] mt-[70px] left-4 right-4 bottom-4 z-[-1] drop-shadow-bg rounded-md"></div>
+          </div>
+          {/*</PersistProvider>*/}
         </StoreProvider>
       </body>
     </html>

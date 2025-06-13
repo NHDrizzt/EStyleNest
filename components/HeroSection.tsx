@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import ScrollLink from "@/components/Reusable/ScrollLink";
 
 const HeroSection = () => {
   return (
@@ -17,11 +18,13 @@ const HeroSection = () => {
             This year, our new summer collection will be your haven from the
             world's harsh elements.
           </h3>
-          <button
-            className={`mt-2  md:mt-10 rounded-sm cursor-pointer bg-indigo-700 px-9 text-white py-3 md:py-4 md:px-16 xl:px-11 text-lg font-medium hover:bg-indigo-800`}
-          >
-            Shop now
-          </button>
+          <ScrollLink href={`#latest-arrivals`} classnames={``}>
+            <button
+              className={`mt-2 md:mt-10 xl:max-w-[175px] rounded-sm cursor-pointer bg-indigo-700 px-9 text-white py-3 md:py-4 md:w-[213px] xl:px-11 text-lg font-medium hover:bg-indigo-800`}
+            >
+              Shop now
+            </button>
+          </ScrollLink>
         </div>
 
         <div className={`w-full`}>

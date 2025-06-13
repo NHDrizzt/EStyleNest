@@ -14,7 +14,7 @@ export interface ProductData {
 }
 
 export interface Product {
-  product_id: number;
+  product_id: string;
   name: string;
   images: {
     color: string;

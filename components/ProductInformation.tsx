@@ -5,6 +5,7 @@ import { ToggleOpenIcon, ToggleCloseIcon } from "@/components/ComponentsSVG";
 import { useColorSelection } from "@/hooks/useColorSelection";
 import { useAppDispatch } from "@/hooks/storeHooks";
 import { addItem } from "@/store/cartSlicer";
+import { toast, ToastContainer } from "react-toastify";
 
 interface Props {
   productList: Product;
@@ -17,6 +18,7 @@ const ProductInformation = ({ productList }: Props) => {
   const { toggleColor, isSelected, currentColor } = useColorSelection(
     productList.product_id,
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [counter, setCounter] = useState(1);
   const dispatch = useAppDispatch();
 
@@ -63,8 +65,48 @@ const ProductInformation = ({ productList }: Props) => {
     );
   };
 
+  const handleAddToCart = () => {
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      const inventorySizeWithNoNulls = inventorySizeWithoutRepeats.filter(
+        (item) => item !== null,
+      );
+      console.log(inventorySizeWithNoNulls);
+      if (selectedSize === null && inventorySizeWithNoNulls.length > 0) {
+        toast.info("Please select a size");
+      } else {
+        dispatch(
+          addItem({
+            product: productList,
+            variant: currentColor,
+            size: selectedSize,
+            price: currentSelectedInventory.list_price,
+            quantity: counter,
+            discount: currentSelectedInventory.discount_percentage || 0,
+          }),
+        );
+        toast.success("🎉 Product added successfully!");
+      }
+
+      setIsSubmitting(false);
+    }, 200);
+  };
+
   return (
     <div className={`max-w-[592px]`}>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <p className={`text-3xl md:text-5xl font-semibold text-neutral-900`}>
         {productList.name}
       </p>
@@ -107,7 +149,7 @@ const ProductInformation = ({ productList }: Props) => {
             activeColor={"#FACC15"}
           />
           <p
-            className={`text-sm font-medium text-indigo-600 hover:underline cursor-pointer hover:text-indigo-700`}
+            className={`text-sm font-medium text-indigo-600 hover:underline  hover:text-indigo-700`}
           >
             See all {productList.reviews} reviews
           </p>
@@ -179,7 +221,10 @@ const ProductInformation = ({ productList }: Props) => {
       )}
 
       <div>
-        {/*<p className={`text-sm text-neutral-500`}>Quantity</p>*/}
+        <div className={`pb-4`}>
+          <p className={`text-sm font-normal text-neutral-500`}>Quantity</p>
+        </div>
+
         <div
           className={`border-1 border-neutral-200 bg-neutral-50 flex flex-col justify-center   h-9 rounded-lg max-w-[125px]`}
         >
@@ -235,21 +280,38 @@ const ProductInformation = ({ productList }: Props) => {
 
       <div className={`w-full mt-8`}>
         <button
-          className={`w-full bg-indigo-600 text-white text-lg font-medium px-3 py-4 rounded-lg cursor-pointer hover:bg-indigo-700`}
+          disabled={isSubmitting}
+          className={`w-full bg-indigo-600 text-white text-lg flex items-center justify-center font-medium px-3 py-4 rounded-lg cursor-pointer  ${
+            isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+          } hover:bg-indigo-700`}
           onClick={() => {
-            dispatch(
-              addItem({
-                product: productList,
-                variant: currentColor,
-                size: selectedSize,
-                price: currentSelectedInventory.list_price,
-                quantity: counter,
-                discount: currentSelectedInventory.discount_percentage || 0,
-              }),
-            );
+            handleAddToCart();
           }}
         >
-          Add to Cart
+          {isSubmitting ? (
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          ) : (
+            "Add to Cart"
+          )}
         </button>
       </div>
 

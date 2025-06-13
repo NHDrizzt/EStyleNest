@@ -6,11 +6,15 @@ import { Product } from "@/types/product";
 import Image from "next/image";
 import ProductImageGallery from "@/components/ProductImageGallery";
 import ProductInformation from "@/components/ProductInformation";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { setSelectedColor } from "@/store/colorSlicer";
 
 export default function ProductPage() {
   const params = useParams();
   const productId = params.product_id as string;
   const [product, setProduct] = useState<Product | null>(null);
+  const selectedColor = useAppSelector((state) => state.selectedColor);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +27,22 @@ export default function ProductPage() {
 
     fetchData();
   }, [productId]);
+
+  useEffect(() => {
+    if (product) {
+      const currentSelectedColor = selectedColor[product.product_id];
+      if (!currentSelectedColor) {
+        const defaultColor = product.images[0].color;
+        dispatch(
+          setSelectedColor({
+            productId: product.product_id,
+            color: defaultColor,
+          }),
+        );
+      }
+    }
+  }, [product]);
+
   if (!product) return <div>Loading...</div>;
 
   return (

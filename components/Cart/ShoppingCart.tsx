@@ -1,31 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CartItem, CartState } from "@/types/cart";
 import Image from "next/image";
 import CounterQuantity from "@/components/Reusable/CounterQuantity";
 import { useAppDispatch } from "@/hooks/storeHooks";
-import { removeItem } from "@/store/cartSlicer";
+import { removeItem, updateTotalPrice } from "@/store/cartSlicer";
+import { useRouter } from "next/navigation";
 
 const ShoppingCart = ({ cart }: { cart: CartState }) => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const subTotal = cart.items.reduce((total, item) => {
     const itemTotal = item.price * item.quantity;
     const discountMultiplier = (100 - (item.discount || 0)) / 100;
     return total + itemTotal * discountMultiplier;
   }, 0);
+
   const calculatePrices = (item: CartItem) => {
     const originalTotal = item.price * item.quantity;
     const discountMultiplier = (100 - (item.discount || 0)) / 100;
     const discountedTotal = originalTotal * discountMultiplier;
+    const discountValue = item.discount || 0;
 
     return {
       originalTotal: originalTotal.toFixed(2),
       discountedTotal: discountedTotal.toFixed(2),
-      showDiscount: item.discount > 0,
+      showDiscount: discountValue,
     };
   };
 
+  useEffect(() => {
+    cart.items.forEach((item) => {
+      const originalTotal = item.price * item.quantity;
+      const discountMultiplier = (100 - (item.discount || 0)) / 100;
+      const discountedTotal = originalTotal * discountMultiplier;
+
+      dispatch(updateTotalPrice({ id: item.id, price: discountedTotal }));
+    });
+  }, [cart.items, dispatch]);
+
   return (
-    <div className={`pt-28`}>
+    <div className={`py-28`}>
       <p className={`text-3xl md:text-5xl font-semibold text-neutral-900`}>
         Shopping Cart
       </p>
@@ -83,7 +97,7 @@ const ShoppingCart = ({ cart }: { cart: CartState }) => {
                         <p className={`text-lg font-medium text-neutral-900`}>
                           ${discountedTotal}
                         </p>
-                        {showDiscount && (
+                        {showDiscount > 0 && (
                           <p
                             className={`text-xs font-base line-through text-neutral-600`}
                           >
@@ -140,6 +154,7 @@ const ShoppingCart = ({ cart }: { cart: CartState }) => {
             <div>
               <button
                 className={`bg-indigo-700 text-white w-full rounded-sm py-4 hover:bg-indigo-800 cursor-pointer`}
+                onClick={() => router.push(`/checkout`)}
               >
                 Checkout
               </button>

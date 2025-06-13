@@ -13,7 +13,7 @@ export async function ProductsSectionWrapper() {
     if (!res.ok) throw new Error("Failed to load products");
     const collections = await res.json();
 
-    return <ProductsSection collections={collections} />;
+    return <ProductsSection collections={collections} id={"latest-arrivals"} />;
   } catch (error) {
     return (
       <ProductErrorComponent message="Failed to load products. Please try again later." />

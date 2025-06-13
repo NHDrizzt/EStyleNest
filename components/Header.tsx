@@ -2,11 +2,27 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAppSelector } from "@/hooks/storeHooks";
 
 const Header = () => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const cart = useAppSelector((state) => state.cart);
+
+  const handleScrollLink = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
+
+    if (pathname === "/") {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/#${sectionId}`);
+    }
+  };
 
   return (
     <header>
@@ -28,7 +44,7 @@ const Header = () => {
             className={`py-1 pl-[103px] flex  items-center gap-x-8 text-neutral-600 w-full`}
           >
             <li className={`hidden xl:block text-base group`}>
-              <Link href="#" className={`relative group-hover:text-indigo-600`}>
+              <Link href="/" className={`relative group-hover:text-indigo-600`}>
                 Shop all
                 <span
                   className={`absolute -bottom-0.5 left-0 w-0 h-[1px]  bg-indigo-600 transition-all duration-300 ease-in-out group-hover:w-full`}
@@ -36,17 +52,21 @@ const Header = () => {
               </Link>
             </li>
             <li className={`hidden xl:block text-base group`}>
-              <Link href="#" className={`relative group-hover:text-indigo-600`}>
+              <Link
+                href="#latest-arrivals"
+                className={`relative group-hover:text-indigo-600 cursor-pointer`}
+                onClick={(e) => handleScrollLink(e, "latest-arrivals")}
+              >
                 Latest arrivals
                 <span
-                  className={`absolute -bottom-0.5 left-0 w-0 h-[1px]  bg-indigo-600 transition-all duration-300 ease-in-out group-hover:w-full`}
+                  className={`absolute -bottom-0.5 left-0 w-0 h-[1px] bg-indigo-600 transition-all duration-300 ease-in-out group-hover:w-full`}
                 ></span>
               </Link>
             </li>
             <div className={`ml-auto flex gap-x-4`}>
               {!isSidebarOpen && (
                 <li
-                  className={`cursor-pointer`}
+                  className={`cursor-pointer relative`}
                   onClick={() => router.push("/cart")}
                 >
                   <Image
@@ -56,6 +76,16 @@ const Header = () => {
                     height={24}
                     className="w-5 h-5 md:w-6 md:h-6"
                   />
+                  {cart.items.length > 0 && (
+                    <div
+                      className={`rounded-full absolute -top-2 -right-2 w-4.5 h-4.5 bg-indigo-700 z-50 text-white flex items-center justify-center`}
+                    >
+                      {cart.items.reduce(
+                        (total, item) => total + item.quantity,
+                        0,
+                      )}
+                    </div>
+                  )}
                 </li>
               )}
 

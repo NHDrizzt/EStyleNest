@@ -5,20 +5,18 @@ import ProductCard from "@/components/Reusable/ProductCard";
 
 interface Props {
   collections: ProductData;
+  id: string;
 }
 
-const ProductsSection = ({ collections }: Props) => {
+const ProductsSection = ({ collections, id }: Props) => {
   return (
-    <div className={`px-3 md:px-0 mt-[96px]`}>
+    <section id={id} className={`px-3 md:px-0 mt-[96px]`}>
       <div className={`flex justify-between items-center w-full`}>
-        <h1 className={`font-semibold text-2xl md:text-3xl`}>
-          Latests Arrivals
-        </h1>
-        <button
-          className={`cursor-pointer px-[18px] py-[10px] rounded-sm border border-neutral-200 drop-shadow-sm hover:bg-indigo-800 hover:text-white hover:border-indigo-800`}
-        >
-          View All
-        </button>
+        <div className={`h-[45px]`}>
+          <h1 className={`font-semibold text-2xl md:text-3xl`}>
+            Latests Arrivals
+          </h1>
+        </div>
       </div>
       <div className={`mt-8`}>
         <div className={`grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4`}>
@@ -27,7 +25,7 @@ const ProductsSection = ({ collections }: Props) => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

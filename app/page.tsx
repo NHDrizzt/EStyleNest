@@ -3,14 +3,13 @@ import { ProductsSectionWrapper } from "@/components/ProductSectionWrapper";
 import Collections from "@/components/Collections";
 import Advantages from "@/components/Advantages";
 import Newsletter from "@/components/Newsletter";
-import Footer from "@/components/Footer";
 
 export default async function HomePage() {
   return (
     <>
       <HeroSection />
       <ProductsSectionWrapper />
-      <div className={``}>
+      <div id={`latest-arrivals`} className={``}>
         <Collections />
       </div>
 

@@ -8,6 +8,9 @@ export interface CartItem {
   size?: string;
   price: number;
   discount?: number;
+  totalCartValue?: number;
+  totalPrice?: number;
+  totalDiscount?: number;
 }
 
 export interface CartState {
