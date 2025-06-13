@@ -1,5 +1,5 @@
 import React from "react";
-import StarIcon from "./StarIcon"; // Your existing StarIcon component
+import StarIcon from "./StarIcon";
 
 interface RatingStarsProps {
   rating: number;
@@ -16,16 +16,13 @@ const RatingStars: React.FC<RatingStarsProps> = ({
   inactiveColor = "#E5E7EB",
   starSize = 20,
 }) => {
-  // Round to one decimal place
   const roundedRating = Math.round(rating * 10) / 10;
 
-  // Calculate full and partial stars
   const fullStars = Math.floor(roundedRating);
   const partialPercentage = (roundedRating - fullStars) * 100;
 
   return (
     <div className="flex items-center">
-      {/* Full stars */}
       {Array.from({ length: fullStars }, (_, index) => (
         <StarIcon
           key={`full-${index}`}
@@ -35,7 +32,6 @@ const RatingStars: React.FC<RatingStarsProps> = ({
         />
       ))}
 
-      {/* Partial star (if needed) */}
       {partialPercentage > 0 && (
         <div
           className="relative inline-block"
@@ -51,7 +47,6 @@ const RatingStars: React.FC<RatingStarsProps> = ({
         </div>
       )}
 
-      {/* Empty stars */}
       {Array.from(
         { length: maxStars - fullStars - (partialPercentage > 0 ? 1 : 0) },
         (_, index) => (

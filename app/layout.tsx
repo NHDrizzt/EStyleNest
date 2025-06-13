@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import StoreProvider from "@/providers/storeProvider";
 import PersistProvider from "@/providers/PersistanceProvider";
 import Footer from "@/components/Footer";
+import { useCartPersist } from "@/hooks/useCartPersist";
 
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",

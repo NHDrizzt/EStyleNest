@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { Provider } from "react-redux";
 import { AppStore, makeStore } from "@/store/store";
+import { useCartPersist } from "@/hooks/useCartPersist";
 
 export default function StoreProvider({
   children,

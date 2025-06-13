@@ -15,8 +15,12 @@ const checkoutSchema = z.object({
   }),
   cardNumber: z
     .string()
-    .regex(/^\d{16}$/, "Card number must be 16 digits")
-    .transform((val) => val.replace(/\s/g, "")), // Remove spaces for validation
+    .min(19, "Card number must be 16 digits")
+    .max(19, "Card number must be 16 digits")
+    .refine((val) => {
+      const digits = val.replace(/\s/g, "");
+      return /^\d{16}$/.test(digits);
+    }, "Invalid card number"),
   cardName: z.string().min(1, "Cardholder name is required"),
   expiry: z
     .string()

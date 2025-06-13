@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
+import CardNumberInput from "@/components/Checkout/CardNumberInput";
 
 const CheckoutForm = () => {
   const {
@@ -280,7 +281,7 @@ const CheckoutForm = () => {
           </div>
 
           <div
-            className={`flex-1 rounded-lg cursor-pointer p-4 space-y-2 hover:bg-neutral-50 ${
+            className={`flex-1 rounded-lg cursor-pointer p-4 space-y-2  ${
               shippingMethod === "express"
                 ? "border-indigo-600 border-[2px]"
                 : "border border-neutral-200"
@@ -317,30 +318,7 @@ const CheckoutForm = () => {
       <div className="space-y-6">
         <p className="text-lg font-medium text-neutral-600">Payment Method</p>
         <div className="space-y-6">
-          <div className="flex-1">
-            <label
-              htmlFor="cardNumber"
-              className="text-sm font-medium text-neutral-700"
-            >
-              Card Number
-            </label>
-            <input
-              id="cardNumber"
-              placeholder="1234 1234 1234 1234"
-              type="text"
-              className={`w-full rounded-sm py-2.5 px-3.5 mt-1.5 placeholder:text-neutral-500 text-neutral-500 border ${
-                errors.cardNumber
-                  ? "focus:border-red-500 focus:outline-0"
-                  : "border-neutral-200"
-              }`}
-              {...register("cardNumber")}
-            />
-            {errors.cardNumber && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.cardNumber.message}
-              </p>
-            )}
-          </div>
+          <CardNumberInput register={register} errors={errors} />
 
           <div className="flex-1">
             <label

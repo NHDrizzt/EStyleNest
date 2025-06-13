@@ -1,8 +1,25 @@
+"use client";
 import React from "react";
 import Image from "next/image";
-import ScrollLink from "@/components/Reusable/ScrollLink";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const HeroSection = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const handleScrollLink = (e: React.MouseEvent, sectionId: string) => {
+    e.preventDefault();
+
+    if (pathname === "/") {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/#${sectionId}`);
+    }
+  };
+
   return (
     <main className={`container md:py-[64px] xl:py-[112px] xl:pb-[96px]`}>
       <div
@@ -18,13 +35,16 @@ const HeroSection = () => {
             This year, our new summer collection will be your haven from the
             world's harsh elements.
           </h3>
-          <ScrollLink href={`#latest-arrivals`} classnames={``}>
+          <Link
+            href={`#latest-arrivals`}
+            onClick={(e) => handleScrollLink(e, "latest-arrivals")}
+          >
             <button
               className={`mt-2 md:mt-10 xl:max-w-[175px] rounded-sm cursor-pointer bg-indigo-700 px-9 text-white py-3 md:py-4 md:w-[213px] xl:px-11 text-lg font-medium hover:bg-indigo-800`}
             >
               Shop now
             </button>
-          </ScrollLink>
+          </Link>
         </div>
 
         <div className={`w-full`}>

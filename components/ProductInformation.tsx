@@ -12,9 +12,9 @@ interface Props {
 }
 
 const ProductInformation = ({ productList }: Props) => {
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string>();
   const [currentSelectedInventory, setCurrentSelectedInventory] =
-    useState<Inventory | null>(productList.inventory[0]);
+    useState<Inventory>(productList.inventory[0]);
   const { toggleColor, isSelected, currentColor } = useColorSelection(
     productList.product_id,
   );
@@ -23,7 +23,7 @@ const ProductInformation = ({ productList }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleSizeSelect = (size: string) => {
-    setSelectedSize((prev) => (prev === size ? null : size));
+    setSelectedSize((prev) => (prev === size ? undefined : size));
   };
 
   const inventoryColourWithoutRepeats = productList.inventory.reduce(
@@ -72,8 +72,8 @@ const ProductInformation = ({ productList }: Props) => {
       const inventorySizeWithNoNulls = inventorySizeWithoutRepeats.filter(
         (item) => item !== null,
       );
-      console.log(inventorySizeWithNoNulls);
-      if (selectedSize === null && inventorySizeWithNoNulls.length > 0) {
+      console.log(selectedSize);
+      if (selectedSize === undefined && inventorySizeWithNoNulls.length > 0) {
         toast.info("Please select a size");
       } else {
         dispatch(

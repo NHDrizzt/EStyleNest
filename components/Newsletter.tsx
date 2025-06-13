@@ -90,7 +90,6 @@ const Newsletter = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                // Clear error when user starts typing
                 if (validationError) setValidationError("");
               }}
               onBlur={handleBlur}

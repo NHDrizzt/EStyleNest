@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import CheckoutForm from "@/components/Checkout/CheckoutForm";
 import OrderSummary from "./OrderSummary";
 import { FormProvider, useForm } from "react-hook-form";
@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 
 const Checkout = () => {
   const methods = useForm<CheckoutFormData>({
-    // resolver: zodResolver(checkoutSchema),
+    resolver: zodResolver(checkoutSchema),
     defaultValues: {
       shippingMethod: "standard",
     },

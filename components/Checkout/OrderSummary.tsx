@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppSelector } from "@/hooks/storeHooks";
 import CartItem from "@/components/Checkout/CartItem";
 import Image from "next/image";
-import { toast } from "react-toastify";
 
 const OrderSummary = ({
   isOrderSuccess,
@@ -14,7 +13,6 @@ const OrderSummary = ({
   watch: any;
   isSubmitting?: boolean;
 }) => {
-  const [showSpinner, setShowSpinner] = useState(false);
   const shippingMethod = watch("shippingMethod");
   const shippingCost = shippingMethod === "standard" ? 0 : 15.0;
   const cart = useAppSelector((state) => state.cart);
@@ -92,7 +90,7 @@ const OrderSummary = ({
           {!isOrderSuccess && (
             <button
               type="submit"
-              disabled={showSpinner}
+              disabled={isSubmitting}
               className="w-full flex cursor-pointer items-center justify-center gap-x-1.5 bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
@@ -117,10 +115,7 @@ const OrderSummary = ({
                   ></path>
                 </svg>
               ) : (
-                <div
-                  className="flex items-center justify-center gap-x-1.5"
-                  // onClick={(e) => handleSubmit(e)}
-                >
+                <div className="flex items-center justify-center gap-x-1.5">
                   <Image
                     src={`/lock.svg`}
                     alt={`confirm order icon`}

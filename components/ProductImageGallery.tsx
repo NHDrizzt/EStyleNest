@@ -8,7 +8,6 @@ type ImageType = {
   color?: string;
 };
 
-// Simple spinner component
 const Spinner = () => (
   <div className="flex items-center justify-center h-full">
     <svg
