@@ -16,6 +16,7 @@ const OrderSummary = ({
   const shippingMethod = watch("shippingMethod");
   const shippingCost = shippingMethod === "standard" ? 0 : 15.0;
   const cart = useAppSelector((state) => state.cart);
+
   const cartTotalValue = cart.items.reduce((total, item) => {
     if (!item.totalPrice) {
       return total;
@@ -23,9 +24,17 @@ const OrderSummary = ({
     return total + item.totalPrice;
   }, 0);
 
-  useEffect(() => {
-    console.log(isSubmitting);
-  }, [isSubmitting]);
+  let couponDiscount = 0;
+
+  if (cart.appliedCoupon) {
+    if (cart.appliedCoupon.type === "percentage") {
+      couponDiscount = (cartTotalValue * cart.appliedCoupon.discount) / 100;
+    } else {
+      couponDiscount = cart.appliedCoupon.discount;
+    }
+  }
+
+  const total = cartTotalValue - couponDiscount + shippingCost;
 
   return (
     <div className="flex-1 sticky top-4 h-fit">
@@ -62,6 +71,16 @@ const OrderSummary = ({
                 ${cartTotalValue.toFixed(2)}
               </p>
             </div>
+            {cart.appliedCoupon && (
+              <div className={`flex justify-between`}>
+                <p className={`text-base font-normal text-neutral-600`}>
+                  Coupon ({cart.appliedCoupon.code})
+                </p>
+                <p className={`text-lg font-semibold text-green-600`}>
+                  -${couponDiscount.toFixed(2)}
+                </p>
+              </div>
+            )}
             <div className={`flex justify-between`}>
               <p className={`text-base font-normal text-neutral-600`}>
                 Shipping
@@ -84,7 +103,7 @@ const OrderSummary = ({
             <p
               className={`${isOrderSuccess ? "text-2xl" : "text-4xl"}  font-semibold text-neutral-900`}
             >
-              ${(cartTotalValue + Number(shippingCost)).toFixed(2)}
+              ${(total + Number(shippingCost)).toFixed(2)}
             </p>
           </div>
           {!isOrderSuccess && (

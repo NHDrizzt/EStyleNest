@@ -81,7 +81,6 @@ export default function ProductImageGallery({
 
   return (
     <div>
-      {/* Main Image with Loading Spinner */}
       <div className="relative w-full h-[800px] mb-4 bg-gray-100 rounded-lg">
         {mainImageLoading && (
           <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -102,7 +101,6 @@ export default function ProductImageGallery({
         />
       </div>
 
-      {/* Thumbnails with Loading States */}
       <div className="relative">
         <div className="flex gap-3 overflow-x-auto max-w-full pb-3 scrollbar-hide">
           {images.map((image, index) => (
@@ -125,7 +123,6 @@ export default function ProductImageGallery({
                 });
               }}
             >
-              {/* Thumbnail Loading Spinner */}
               {thumbnailsLoading[index] && (
                 <div className="absolute inset-0 flex items-center justify-center z-10">
                   <Spinner />

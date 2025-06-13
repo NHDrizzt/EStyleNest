@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Product } from "@/types/product";
-import { CartState } from "@/types/cart";
+import { CartState, Coupon } from "@/types/cart";
 
 const getInitialState = (): CartState => {
   if (typeof window !== "undefined") {
@@ -52,6 +52,9 @@ const cartSlice = createSlice({
     },
     removeItem: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      if (state.items.length === 0) {
+        state.appliedCoupon = null;
+      }
     },
     updateQuantity: (
       state,
@@ -73,6 +76,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = [];
+      state.appliedCoupon = null;
     },
     updateTotalPrice: (
       state,
@@ -82,6 +86,12 @@ const cartSlice = createSlice({
       if (item) {
         item.totalPrice = action.payload.price;
       }
+    },
+    applyCoupon: (state, action: PayloadAction<Coupon>) => {
+      state.appliedCoupon = action.payload;
+    },
+    removeCoupon: (state) => {
+      state.appliedCoupon = null;
     },
     setCart: (state, action: PayloadAction<CartState>) => {
       state.items = action.payload.items;
@@ -97,5 +107,7 @@ export const {
   updatePrice,
   updateTotalPrice,
   setCart,
+  applyCoupon,
+  removeCoupon,
 } = cartSlice.actions;
 export default cartSlice.reducer;

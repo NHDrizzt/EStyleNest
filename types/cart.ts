@@ -15,4 +15,11 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[];
+  appliedCoupon?: Coupon | null;
 }
+
+export type Coupon = {
+  code: string;
+  discount: number;
+  type: "percentage" | "fixed";
+};

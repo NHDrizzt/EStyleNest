@@ -43,15 +43,15 @@ const OrderSuccess = ({
         <div className={`space-y-1.5`}>
           <p className={`text-base text-neutral-600`}>Order Number</p>
           <div className={`flex gap-x-1.5`}>
-            <p className={`text-base font-medium text-indigo-700`}>
+            <p className={`text-base font-medium text-neutral-900`}>
               1928371928
             </p>
-            <Image
-              src={`/order-code.svg`}
-              alt={`order code icon`}
-              width={20}
-              height={20}
-            />
+            {/*<Image*/}
+            {/*  src={`/order-code.svg`}*/}
+            {/*  alt={`order code icon`}*/}
+            {/*  width={20}*/}
+            {/*  height={20}*/}
+            {/*/>*/}
           </div>
         </div>
         <div>
