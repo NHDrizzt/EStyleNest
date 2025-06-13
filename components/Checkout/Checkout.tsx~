@@ -44,11 +44,7 @@ const Checkout = () => {
   return (
     <div ref={topRef} className="mt-28">
       {isOrderSuccess ? (
-        <OrderSuccess
-          orderData={orderData}
-          watch={methods.watch}
-          shippingMethod={methods.watch().shippingMethod}
-        />
+        <OrderSuccess orderData={orderData} watch={methods.watch} shippingMethod={methods.watch().shippingMethod} />
       ) : (
         <>
           <div className={`pb-8`}>
