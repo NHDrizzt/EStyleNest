@@ -1,5 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
-import { setSelectedColor, clearSelectedColor } from "@/store/colorSlicer";
+import {
+  setSelectedColor,
+  clearSelectedColor,
+  clearAllSelectedColors,
+} from "@/store/colorSlicer";
 
 export const useColorSelection = (productId: number | string) => {
   const dispatch = useAppDispatch();
@@ -10,16 +14,17 @@ export const useColorSelection = (productId: number | string) => {
   const currentColor = selectedColors[productIdStr];
 
   const toggleColor = (color: string) => {
-    if (currentColor === color) {
-      dispatch(clearSelectedColor(productIdStr));
-    } else {
-      dispatch(setSelectedColor({ productId: productIdStr, color }));
-    }
+    dispatch(setSelectedColor({ productId: productIdStr, color }));
+  };
+
+  const clearColorSelection = () => {
+    dispatch(clearAllSelectedColors());
   };
 
   return {
     currentColor,
     toggleColor,
+    clearColorSelection,
     isSelected: (color: string) => currentColor === color,
   };
 };

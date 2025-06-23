@@ -46,8 +46,10 @@ export default function ProductPage() {
 
   return (
     <div className={`pt-28`}>
-      <div className={`flex gap-x-8`}>
-        <div className={`max-w-[592px] w-full flex flex-col`}>
+      <div className={`px-4 md:px-0 flex xl:flex-row flex-col gap-x-8`}>
+        <div
+          className={`max-w-[311px] md:max-w-[702px] xl:max-w-[592px] flex flex-col`}
+        >
           <ProductImageGallery productId={productId} images={product.images} />
         </div>
         <div>{product && <ProductInformation productList={product} />}</div>

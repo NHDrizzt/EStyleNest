@@ -67,7 +67,7 @@ const Checkout = () => {
 
           <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <div className="flex gap-x-8 flex-1">
+              <div className="flex xl:flex-row flex-col gap-y-8 gap-x-8 flex-1">
                 <CheckoutForm />
                 <OrderSummary
                   watch={methods.watch}

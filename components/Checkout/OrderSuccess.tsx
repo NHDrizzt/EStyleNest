@@ -8,6 +8,7 @@ import { clearCart } from "@/store/cartSlicer";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import CartItem from "@/components/Checkout/CartItem";
 import { CartState } from "@/types/cart";
+import { clearAllSelectedColors } from "@/store/colorSlicer";
 
 const OrderSuccess = ({
   orderData,
@@ -29,6 +30,7 @@ const OrderSuccess = ({
 
     return () => {
       dispatch(clearCart());
+      dispatch(clearAllSelectedColors());
     };
   }, []);
 
@@ -54,13 +56,17 @@ const OrderSuccess = ({
   const total = cartTotalValue - couponDiscount + shippingCost;
 
   return (
-    <div className={`flex gap-x-8 h-full`}>
-      <div className={`relative w-full max-w-[592px]`}>
+    <div
+      className={`px-4 md:px-0 flex flex-col xl:flex-row gap-y-12 gap-x-8 h-full`}
+    >
+      <div
+        className={`relative h-[196px] w-full xl:max-w-[592px] xl:h-auto md:h-[420px]`}
+      >
         <Image
           src={`/order-success.png`}
           alt={`order success image`}
           fill
-          className={`object-cover object-bottom`}
+          className={`object-cover object-[center_65%]  md:object-[center_60%]   xl:object-bottom`}
         />
       </div>
 

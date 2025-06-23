@@ -72,7 +72,7 @@ const ProductInformation = ({ productList }: Props) => {
       const inventorySizeWithNoNulls = inventorySizeWithoutRepeats.filter(
         (item) => item !== null,
       );
-      console.log(selectedSize);
+
       if (selectedSize === undefined && inventorySizeWithNoNulls.length > 0) {
         toast.info("Please select a size");
       } else {
@@ -94,7 +94,7 @@ const ProductInformation = ({ productList }: Props) => {
   };
 
   return (
-    <div className={`max-w-[592px]`}>
+    <div className={``}>
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

@@ -92,12 +92,12 @@ const ShoppingCart = ({ cart }: { cart: CartState }) => {
   }, [cart.items, dispatch]);
 
   return (
-    <div className={`py-28`}>
+    <div className={`py-28 px-3 md:px-0`}>
       <p className={`text-3xl md:text-5xl font-semibold text-neutral-900`}>
         Shopping Cart
       </p>
 
-      <div className={`mt-16 flex flex-col md:flex-row gap-x-8`}>
+      <div className={`mt-16 flex flex-col xl:flex-row gap-x-8`}>
         <div className="flex flex-col mb-12">
           {cart.items.map((item, index) => {
             const isLast = index === cart.items.length - 1;
@@ -111,8 +111,8 @@ const ShoppingCart = ({ cart }: { cart: CartState }) => {
                 key={item.id}
                 className={`pb-8 ${!isLast ? "border-b border-neutral-200 mb-8" : ""}`}
               >
-                <div className="flex gap-x-8 max-w-[800px]">
-                  <div className="w-full max-w-[280px] h-[200px]">
+                <div className="flex md:flex-row flex-col gap-x-8 gap-y-4 md:gap-y-0 max-w-[800px]">
+                  <div className="w-full md:max-w-[280px] h-[200px]">
                     <Image
                       src={currentImage?.image_url || ""}
                       alt={item.product.name}

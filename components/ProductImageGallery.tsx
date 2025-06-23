@@ -57,6 +57,17 @@ export default function ProductImageGallery({
   }, [currentColor, images]);
 
   useEffect(() => {
+    const thumbnailElement = thumbnailRefs.current[currentImageIndex];
+    if (thumbnailElement) {
+      thumbnailElement.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
+  }, [currentImageIndex]);
+
+  useEffect(() => {
     setThumbnailsLoading((prev) => {
       if (prev.length !== images.length) {
         return Array(images.length).fill(true);
@@ -80,8 +91,8 @@ export default function ProductImageGallery({
   if (!images || images.length === 0) return <div>No images available</div>;
 
   return (
-    <div>
-      <div className="relative w-full h-[800px] mb-4 bg-gray-100 rounded-lg">
+    <div className={`w-full xl:min-w-[592px]`}>
+      <div className="relative h-[400px] md:h-[800px] mb-4 bg-gray-100 rounded-lg">
         {mainImageLoading && (
           <div className="absolute inset-0 flex items-center justify-center z-10">
             <Spinner />
@@ -92,7 +103,7 @@ export default function ProductImageGallery({
           src={images[currentImageIndex].image_url}
           alt="Main product image"
           fill
-          className={`object-cover rounded-lg transition-opacity duration-300 ${
+          className={`object-cover rounded-lg transition-transform duration-300 ${
             mainImageLoading ? "opacity-0" : "opacity-100"
           }`}
           priority
@@ -109,7 +120,7 @@ export default function ProductImageGallery({
               ref={(el) => {
                 thumbnailRefs.current[index] = el;
               }}
-              className={`relative flex-shrink-0 cursor-pointer transition-all duration-200 ${
+              className={`max-w-[80px] max-h-[120px] md:max-w-[180px] md:max-h-[190px] xl:max-h-[190px] xl:max-w-[160px] relative flex-shrink-0 cursor-pointer transition-all duration-200 ${
                 currentImageIndex === index
                   ? "border-[3px] border-indigo-600 rounded-lg"
                   : "opacity-80 hover:opacity-100"
@@ -135,7 +146,7 @@ export default function ProductImageGallery({
                 src={image.image_url}
                 alt={`Thumbnail ${index + 1}`}
                 fill
-                className={`object-cover rounded-lg transition-opacity duration-300 ${
+                className={` object-cover rounded-lg transition-opacity duration-300 ${
                   thumbnailsLoading[index] ? "opacity-0" : "opacity-100"
                 }`}
                 onLoadingComplete={() => handleThumbnailLoad(index)}

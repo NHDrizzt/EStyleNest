@@ -20,9 +20,14 @@ export const selectedColorSlice = createSlice({
     clearSelectedColor: (state, action: PayloadAction<string>) => {
       delete state[action.payload];
     },
+    clearAllSelectedColors: (state) => {
+      Object.keys(state).forEach((key) => {
+        delete state[key];
+      });
+    },
   },
 });
 
-export const { setSelectedColor, clearSelectedColor } =
+export const { setSelectedColor, clearSelectedColor, clearAllSelectedColors } =
   selectedColorSlice.actions;
 export default selectedColorSlice.reducer;
