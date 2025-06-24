@@ -71,7 +71,7 @@
 ## 🖥️ Executando Localmente
 ```bash
 # Clonar repositório
-git clone https://github.com/seu-usuario/EStyleNest.git
+git clone https://github.com/NHDrizzt/EStyleNest.git
 
 # Instalar dependências
 npm install
